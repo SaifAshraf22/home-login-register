@@ -1,21 +1,18 @@
-import {View,Text,SafeAreaView,ScrollView,StyleSheet,Image,} from 'react-native'
+import {Text,SafeAreaView,ScrollView,StyleSheet,Image,} from 'react-native'
 import Input from './views/components/Input';
 import c from "../src/images/c.jpg"
 import React, { useState } from 'react';
 import Button from './views/components/Button';
-import Loader from './views/components/loader';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AlertNotificationRoot, ALERT_TYPE, Dialog,  Toast } from 'react-native-alert-notification';
-import Login from './Login';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import  auth  from '../firebase';
 
 const Registration =({navigation})=>{
    const [email,setEmail]=useState('');
    const [password,setPassword]=useState('');
+   
    const handelSignUp=()=>{
     createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
+   .then((userCredential) => {
     // Signed in 
     console.log("done")
     window.alert("successfully")
@@ -33,6 +30,7 @@ const Registration =({navigation})=>{
     // window.alert("errorMessage")
 });
    }
+
     const [inputs,setInputs]=React.useState({
         studno:"",
         email:"",
@@ -41,8 +39,8 @@ const Registration =({navigation})=>{
         password:"",
         passwordConfirm:"",
     });
+
     const [errors,setErrors]=React.useState({ });
-    const [Loading,setLoading]=React.useState(false);
     
     const validate=()=>{
         let isValid=true;
@@ -83,41 +81,16 @@ const Registration =({navigation})=>{
         if(isValid) register();
         
     }
-    const register=()=>{
-        console.log("register");
-        console.log(inputs);
-        
-        Dialog.show({
-            type: ALERT_TYPE.SUCCESS,
-            title: 'Success',
-            textBody: 'Congrats! this is dialog box success',
-            button: 'close',
-            onHide:()=>{
-                navigation.navigate("Login");
-            }
-          });
-        setLoading(true);
-        setTimeout(()=>{
-            try{
-             setLoading(false);
-            AsyncStorage.setItem("userData",JSON.stringify(inputs));
-            console.log("user successfully created")
-       
-        }catch(error){}
-        },3000);
-        
-    };
+    
     const handelOnChange=(text,input)=>{
         setInputs((prevState)=>({...prevState,[input]:text}));
     }
     const handelError=(text,input)=>{
         setErrors((prevState)=>({...prevState,[input]:text}));
     }
+
     return(
         <SafeAreaView style={style.container}>
-            {/* <AlertNotificationRoot> */}
-
-            <Loader visible={Loading}/>
          <ScrollView contentContainerStyle={style.scrollContainer}>
             <Image style={style.image} source={c}/>
             <Text style={style.textTitle}>Registration Form</Text>
@@ -136,12 +109,11 @@ const Registration =({navigation})=>{
              onChangeText={(text)=>handelOnChange(text,"passwordConfirm")}onFocus={()=>handelError(null,"passwordConfirm")} error={errors.passwordConfirm}/>
         <Button title="Register" onPress={(handelSignUp)}/> 
         <Text  style={style.textRegister} onPress={()=>navigation.navigate("Login")}>Have Account! </Text>
-        {/* <Button title="Login" onPress={()=>navigation.navigate("Login")}/>  */}
         </ScrollView>
-        {/* </AlertNotificationRoot> */}
         </SafeAreaView>
     );
 };
+
 const style=StyleSheet.create({
     container:{
         backgroundColor:"white",
