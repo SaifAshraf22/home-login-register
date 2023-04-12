@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import {View,Text,SafeAreaView,ScrollView,StyleSheet,Image} from 'react-native';
 import Input from './views/components/Input';
 import Button from './views/components/Button';
-import c from "../src/images/c.jpg";
+import c from "../src/images/c.png";
 import  auth  from '../firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { signInWithGoogle } from "../firebase";
@@ -10,6 +10,7 @@ import GoogleButton from 'react-google-button'
 import Header from "./views/components/Header";
 import { StatusBar } from "react-native-web";
 import { Colors } from "./global/styles";
+import { SocialIcon } from "react-native-elements";
 
 
 
@@ -33,7 +34,7 @@ const Login=({navigation})=>{
     const errorCode = error.code;
     const errorMessage = error.message;
     console.log(errorMessage)
-    window.alert("ERROR")
+    // window.alert("ERROR")
     validate()
   });
        }
@@ -73,26 +74,40 @@ const Login=({navigation})=>{
     
     return(
          <SafeAreaView style={styles.container}>
+            
             <View style={styles.head}>
             <StatusBar barStyle="light.content" backgroundColor={Colors.statusbar}/>
-            <Header title={"Login"}/>
+            <Header title={"Login"}type={'arrow-left'}/>
+            </View>
+            
             <ScrollView style={styles.svContainer}>
             <Image style={styles.image} source={c}/>
-            <Text style={styles.welc}>Welcome To Faculty Of Science</Text>
             <Text style={styles.textTitle}>Login Form</Text>
+            <Text style={styles.text1}>Please enter email and password </Text>
+            <Text style={styles.text1}> register with your account </Text>
+           
             <View style={styles.viewContainer}>
-            <Input  label="Email Address" iconName="envelope"placeholder="Enter Your E_mail"
+            <Input  iconName="envelope"placeholder="Enter Your E_mail"
             onChangeText={setEmail}onFocus={()=>handelError(null,"email")} error={errors.email} value={email}/>
-            <Input  label="Password" iconName="key"placeholder="Enter Your Password" password 
+            <Input iconName="key"placeholder="Enter Your Password" password 
             onChangeText={setPassword}onFocus={()=>handelError(null,"password")} error={errors.password} value={password}/>
-            <Button title="Login" onPress={(handelSignIn)}/>  
-            <Text  style={styles.textRegister} onPress={()=>navigation.navigate("ForgetPass")}>Forget Password ?</Text>
-            <Text style={styles.welc}>or</Text>
+            <Button title="LOGIN" onPress={(handelSignIn)}/>  
+            <Text  style={{...styles.text1,textDecorationLine:"underline",fontStyle:"bold",fontSize:17}} onPress={()=>navigation.navigate("ForgetPass")}>Forget Password ?</Text>
+            <Text style={{...styles.textTitle,alignSelf:"center",fontSize:27,marginTop:15,color:"black"}}>or</Text>
             <GoogleButton type="dark" style={styles.go} onClick={(signInWithGoogle)}>Sign In With Google</GoogleButton>
-            <Text  style={styles.textRegister} onPress={()=>navigation.navigate("ٌRegistration")}>Don't have account? Register</Text>
+            <View>
+                <SocialIcon
+                    title="Sign In With Facebook"
+                    button
+                    type="facebook"
+                    style={styles.socialIcon}
+                    onPress={()=>{}}
+                />
+                
+            </View>
+            <Text  style={{...styles.text1,textDecorationLine:"underline",fontStyle:"bold",fontSize:17,marginTop:15}} onPress={()=>navigation.navigate("ٌRegistration")}>Don't have account? <Text style={{color:"#ff8c52",}}>Register</Text></Text>
             </View>
             </ScrollView>
-            </View>
 
         </SafeAreaView>
     );
@@ -110,22 +125,24 @@ const styles=StyleSheet.create({
         paddingHorizontal: 20,
     },
     image:{
-        width:250,
-        height:250,
-        alignSelf:"center"
+        width:200,
+        height:200,
+        alignSelf:"center",
+        marginTop:15,
+        flex:true
     },
-    welc:{
-        fontSize:35,
+    text1:{
+        fontSize:16,
         fontStyle:"italic",
-        color:"#119390",
-        alignItems:"center",
-        textAlign:"center"
-
+        color:Colors.grey3,
+        textAlign:"center",
     },
     textTitle:{
-        fontSize:30,
         fontWeight:"bold",
-        color:"darkblue"
+        color:"#ff8c52",
+        fontSize :20,
+        fontWeight:"bold",
+        marginBottom:10
     },
     viewContainer:{
         paddingVertical: 20,
@@ -147,17 +164,25 @@ const styles=StyleSheet.create({
             marginTop:13,
             marginLeft:400,
             marginRight:400,
+            marginHorizontal:100,
             justifyContent:"center",
             alignItems:"center",
             borderRadius:1,
-            color:"white",
             fontWeight:"bold",
-            fontSize:18
+            fontSize:15
             
         },
         text:{
             fontSize:15,
             color:"red"
+        },
+        socialIcon:{
+            marginHorizontal:400,
+            borderRadius:0,
+            marginTop:12,
+
+
+
         }
         
     

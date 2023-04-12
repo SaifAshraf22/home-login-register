@@ -1,6 +1,6 @@
 import {Text,SafeAreaView,ScrollView,StyleSheet,Image,} from 'react-native'
 import Input from './views/components/Input';
-import c from "../src/images/c.jpg"
+import c from "../src/images/c.png"
 import React, { useState } from 'react';
 import Button from './views/components/Button';
 import { createUserWithEmailAndPassword } from "firebase/auth";

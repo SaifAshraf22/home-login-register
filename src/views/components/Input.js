@@ -37,14 +37,15 @@ const style =StyleSheet.create({
         marginBottom:20,
     },
     input:{
-        backgroundColor:"lightcyan",
-        height:55,
+        borderWidth:1,
+        backgroundColor:"#e8e8e8",
+        height:60,
         flexDirection:"row",
+        marginHorizontal:20,
         paddingHorizontal:15,
         borderWidth:0.75,
         alignItems:"center",
         borderRadius:200,
-        borderWidth:1
     },
     icon:{
         fontSize:25,
@@ -58,6 +59,10 @@ const style =StyleSheet.create({
         color:"darkblue",
         flex:1,
         marginLeft:10,
+        paddingHorizontal:10,
+        paddingVertical:16,
+        fontSize:16,
+
     },
     textError:{
         marginTop:7,
