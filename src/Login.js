@@ -2,12 +2,14 @@ import React,{useState} from "react";
 import {View,Text,SafeAreaView,ScrollView,StyleSheet,Image} from 'react-native';
 import Input from './views/components/Input';
 import Button from './views/components/Button';
-import Loader from './views/components/loader';
 import c from "../src/images/c.jpg";
 import  auth  from '../firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { signInWithGoogle } from "../firebase";
 import GoogleButton from 'react-google-button'
+import Header from "./views/components/Header";
+import { StatusBar } from "react-native-web";
+import { Colors } from "./global/styles";
 
 
 
@@ -71,10 +73,12 @@ const Login=({navigation})=>{
     
     return(
          <SafeAreaView style={styles.container}>
-            <Loader visible={Loading}/>
+            <View style={styles.head}>
+            <StatusBar barStyle="light.content" backgroundColor={Colors.statusbar}/>
+            <Header title={"Login"}/>
             <ScrollView style={styles.svContainer}>
             <Image style={styles.image} source={c}/>
-                <Text style={styles.welc}>Welcome To Faculty Of Science</Text>
+            <Text style={styles.welc}>Welcome To Faculty Of Science</Text>
             <Text style={styles.textTitle}>Login Form</Text>
             <View style={styles.viewContainer}>
             <Input  label="Email Address" iconName="envelope"placeholder="Enter Your E_mail"
@@ -88,11 +92,15 @@ const Login=({navigation})=>{
             <Text  style={styles.textRegister} onPress={()=>navigation.navigate("ٌRegistration")}>Don't have account? Register</Text>
             </View>
             </ScrollView>
+            </View>
+
         </SafeAreaView>
     );
 };
 const styles=StyleSheet.create({
-    
+    head:{
+        flex:1
+    },
     container:{
         flex:1,
         backgroundColor:"white"

@@ -8,6 +8,7 @@ import HomeScreen from './src/HomeScreen';
 import Registration from './src/Registration';
 import Login from './src/Login';
 import ForgetPass from './src/ForgetPass';
+import Header from './src/views/components/Header';
 
 
 
@@ -15,8 +16,8 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
+    <NavigationContainer >
+      <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName='Login'>
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="ٌRegistration" component={Registration} />
         <Stack.Screen name="Login" component={Login} />
