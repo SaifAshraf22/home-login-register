@@ -1,9 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 
 import {
   TextInput,
-  Button,
   StyleSheet,
   Text,
   View,
@@ -11,10 +9,8 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import auth from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { sendPasswordResetEmail } from "firebase/auth";
 
 const Stack = createNativeStackNavigator();

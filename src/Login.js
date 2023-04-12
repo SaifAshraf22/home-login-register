@@ -1,14 +1,9 @@
 import React,{useState} from "react";
-// import { SafeAreaView,View,Text,StyleSheet,ScrollView,Image } from "react-native-web";
-import {View,Text,SafeAreaView,ScrollView,StyleSheet,Image, Alert,ImageBackground} from 'react-native';
-
-// import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
+import {View,Text,SafeAreaView,ScrollView,StyleSheet,Image} from 'react-native';
 import Input from './views/components/Input';
 import Button from './views/components/Button';
 import Loader from './views/components/loader';
 import c from "../src/images/c.jpg";
-import { ALERT_TYPE, Dialog } from "react-native-alert-notification";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import  auth  from '../firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { signInWithGoogle } from "../firebase";
@@ -36,7 +31,7 @@ const Login=({navigation})=>{
     const errorCode = error.code;
     const errorMessage = error.message;
     console.log(errorMessage)
-    // window.alert("ERROR")
+    window.alert("ERROR")
     validate()
   });
        }
@@ -66,72 +61,16 @@ const Login=({navigation})=>{
         }
         if(isValid) login();
     }
+
     const handelOnChange=(text,input)=>{
         setInputs((prevState)=>({...prevState,[input]:text}));
     }
     const handelError=(text,input)=>{
         setErrors((prevState)=>({...prevState,[input]:text}));
     }
-    const login=()=>{
-        console.log("login");
-        console.log(inputs);
-
-        setLoading(true);
-        setTimeout(async()=>{
-            try{
-             setLoading(false);
-             let userData=await AsyncStorage.getItem("userData");
-             
-             if(userData){
-                 userData=JSON.parse(userData);
-                console.log("userData");
-             console.log(userData);
-            if(
-                inputs.email==userData.email&&
-                inputs.password==userData.password
-            ){   
-                navigation.navigate("HomeScreen");
-                AsyncStorage.setItem(
-                    "userData",
-                    JSON.stringify({userData,loggedIn:true})
-                )
-            }
-            
-            else{
-                Dialog.show({
-                    type:ALERT_TYPE.DANGER,
-                    title:"ERROR",
-                    textBody:"invalided",
-                    button:"Close"
-                })
-            }
-        }else{
-            console.log("No Account")
-            Dialog.show({
-                type:ALERT_TYPE.DANGER,
-                title:"ERROR",
-                textBody:"No Account Found",
-                button:"Close"
-            })
-        }
-    }catch(error){
-        console.log("Error"+error)
-        Dialog.show({
-            type:ALERT_TYPE.DANGER,
-            title:"ERROR",
-            textBody:error,
-            button:"Close"
-        });
-    }
-        },3000);
-        
-    };
+    
     return(
-       <ImageBackground source={require('../assets/Back.jpg')} style={{
-        height:1000
-       }}>
          <SafeAreaView style={styles.container}>
-            {/* <AlertNotificationRoot> */}
             <Loader visible={Loading}/>
             <ScrollView style={styles.svContainer}>
             <Image style={styles.image} source={c}/>
@@ -144,16 +83,12 @@ const Login=({navigation})=>{
             onChangeText={setPassword}onFocus={()=>handelError(null,"password")} error={errors.password} value={password}/>
             <Button title="Login" onPress={(handelSignIn)}/>  
             <Text  style={styles.textRegister} onPress={()=>navigation.navigate("ForgetPass")}>Forget Password ?</Text>
-            {/* <Button title="Login" onPress={() =>navigation.navigate("HomeScreen")}/> */}
             <Text style={styles.welc}>or</Text>
             <GoogleButton type="dark" style={styles.go} onClick={(signInWithGoogle)}>Sign In With Google</GoogleButton>
-           
             <Text  style={styles.textRegister} onPress={()=>navigation.navigate("ٌRegistration")}>Don't have account? Register</Text>
             </View>
             </ScrollView>
-            {/* </AlertNotificationRoot> */}
         </SafeAreaView>
-       </ImageBackground>
     );
 };
 const styles=StyleSheet.create({

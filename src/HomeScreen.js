@@ -1,11 +1,9 @@
 import React from "react";
-import { View,Text, Button } from "react-native-web";
+import { View, Button } from "react-native-web";
 import Input from "./views/components/Input";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet } from "react-native-web";
-// import Button from "./views/components/Button";
-import auth, { signInWithGoogle } from "../firebase";
-import { Auth } from "firebase/auth";
+import auth from "../firebase";
 
 const HomeScreen=()=> {
   const {userDetails,setUserDetails}=React.useState();

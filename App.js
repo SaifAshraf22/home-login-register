@@ -7,7 +7,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/HomeScreen';
 import Registration from './src/Registration';
 import Login from './src/Login';
-import Dashboard from './src/Dashboard';
 import ForgetPass from './src/ForgetPass';
 
 
