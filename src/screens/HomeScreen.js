@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Button } from "react-native-web";
-import Input from "./views/components/Input";
+import Input from "../views/components/Input";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet } from "react-native-web";
-import auth from "../firebase";
+import auth from "../../firebase";
 
-const HomeScreen=()=> {
+const HomeScreen=({navigation})=> {
   const {userDetails,setUserDetails}=React.useState();
   React.useEffect(()=>{
     getUserData();
@@ -33,6 +33,7 @@ const HomeScreen=()=> {
         <h3>{localStorage.getItem("email")}</h3>
         <img src={localStorage.getItem("profilePic")}/>
         <Input/>
+      
         <Button style={style.button} title="Logout" onPress={(logout)=>navigation.navigate("Login")}/> 
 
       </View>

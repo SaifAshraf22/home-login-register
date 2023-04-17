@@ -10,8 +10,11 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import auth from '../firebase';
+import auth from '../../firebase';
 import { sendPasswordResetEmail } from "firebase/auth";
+import Header from '../views/components/Header';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Button from '../views/components/Button';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,10 +42,12 @@ const ForgetPass = ({ navigation }) => {
 
 
   return (
+    <SafeAreaView style={styles.container1}>
+      <Header title={"Forget Password"}type={'arrow-left'} navigation={navigation}/>
     <View style={styles.container}>
       <Text style={styles.title}>Create New Password </Text>
       <Image
-        source={require('../assets/signup2.jpg')}
+        source={require('../images/signup2.jpg')}
         style={[styles.img, { height: height * 0.45 }]}
         resizeMode='contain'
       />
@@ -55,18 +60,18 @@ const ForgetPass = ({ navigation }) => {
       <TouchableOpacity onPress={handleForgetPassword}>
         <Text style={styles.signIn}>Send</Text>
       </TouchableOpacity>
-  
-      <Text
-        style={styles.acc}
-        onPress={() => navigation.navigate('Login')}
-      >
-        Back To Login Page
-      </Text>
+
+     
     </View>
+    </SafeAreaView>
   );
 };
 export default ForgetPass;
 const styles = StyleSheet.create({
+  container1:{
+    flex:1,
+    backgroundColor:"white"
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -91,7 +96,7 @@ const styles = StyleSheet.create({
   },
   signIn: {
     fontSize: 18,
-    backgroundColor: '#119390',
+    backgroundColor: '#ff8c52',
     color:"white",
     fontWeight:"bold",
     paddingVertical: 13,
@@ -112,9 +117,11 @@ const styles = StyleSheet.create({
     
   },
   img: {
-    width: '50%',
-    height: '50%',
-    marginBottom: 35,
+    flex:1,
+        justifyContent:"center",
+        alignItems:"center",
+        height:"100%",
+        width:"100%"
   },
   acc: {
     fontWeight: 'bold',

@@ -1,10 +1,12 @@
 import {Text,SafeAreaView,ScrollView,StyleSheet,Image,} from 'react-native'
-import Input from './views/components/Input';
-import c from "../src/images/c.png"
+import Input from '../views/components/Input';
+import c from "../images/c.png"
 import React, { useState } from 'react';
-import Button from './views/components/Button';
+import Button from '../views/components/Button';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import  auth  from '../firebase';
+import  auth  from '../../firebase';
+import { Colors } from '../global/styles';
+import Header from '../views/components/Header';
 
 const Registration =({navigation})=>{
    const [email,setEmail]=useState('');
@@ -45,10 +47,6 @@ const Registration =({navigation})=>{
     const validate=()=>{
         let isValid=true;
 
-        if(!inputs.studno){
-            handelError("Please Enter Student Name", "studno")
-            isValid=false;
-        }
         if(!inputs.email){
             handelError("Please Enter Email Address", "email")
             isValid=false;
@@ -91,24 +89,25 @@ const Registration =({navigation})=>{
 
     return(
         <SafeAreaView style={style.container}>
+            <Header title={"Register"}type={'arrow-left'} navigation={navigation}/>
+
          <ScrollView contentContainerStyle={style.scrollContainer}>
+        
             <Image style={style.image} source={c}/>
             <Text style={style.textTitle}>Registration Form</Text>
-            <Text style={style.textSubTitle}>Enter Your Details To Register</Text>
-            <Input  label="Student Number" iconName="id-badge"placeholder="Enter Your Name" 
-            onChangeText={(text)=>handelOnChange(text,"studno")} onFocus={()=>handelError(null,"studno")} error={errors.studno}/>
-            <Input  label="Full Name" iconName="user"placeholder="Enter Your Full Name"
+            <Text style={style.text1}>Enter Your Details To Register</Text>
+            <Input  iconName="user"placeholder="Enter Your Full Name"
             onChangeText={(text)=>handelOnChange(text,"fullname")}onFocus={()=>handelError(null,"fullname")} error={errors.fullname}/>
-            <Input  label="Phone Number" iconName="mobile-alt"placeholder="Enter Your Number"
+            <Input  iconName="mobile-alt"placeholder="Enter Your Number"
             onChangeText={(text)=>handelOnChange(text,"phone")}onFocus={()=>handelError(null,"phone")} error={errors.phone}/>
-            <Input  label="Email Address" iconName="envelope"placeholder="Enter Your E_mail" value={email}
+            <Input  iconName="envelope"placeholder="Enter Your E_mail" value={email}
             onChangeText={setEmail}onFocus={()=>handelError(null,"email")} error={errors.email} />
-            <Input  label="Password" iconName="key"placeholder="Enter Your Password" password 
+            <Input  iconName="key"placeholder="Enter Your Password" password 
             onChangeText={setPassword}onFocus={()=>handelError(null,"password")} error={errors.password} value={password} />
-            <Input  label="Confirm Password" iconName="key"placeholder="Confirm The Password" password
+            <Input  iconName="key"placeholder="Confirm The Password" password
              onChangeText={(text)=>handelOnChange(text,"passwordConfirm")}onFocus={()=>handelError(null,"passwordConfirm")} error={errors.passwordConfirm}/>
         <Button title="Register" onPress={(handelSignUp)}/> 
-        <Text  style={style.textRegister} onPress={()=>navigation.navigate("Login")}>Have Account! </Text>
+        <Text style={{...style.text1,textDecorationLine:"underline",fontStyle:"bold",fontSize:17,marginTop:10}}  onPress={()=>navigation.navigate("Login")}>Have Account!<Text style={{color:"#ff8c52",}}>LOGIN</Text> </Text>
         </ScrollView>
         </SafeAreaView>
     );
@@ -119,19 +118,26 @@ const style=StyleSheet.create({
         backgroundColor:"white",
         flex:1,
     },
+    head:{
+        flex:1
+    },
     scrollContainer:{
         paddingTop:30,
         paddingHorizontal:20,
     },
     textTitle:{
-        fontSize:30,
-        fontWeight:"bold",
-        color:"darkblue"
-    },
-    textSubTitle:{
         fontSize:20,
-        color:"black",
-        marginVertical:10
+        fontWeight:"bold",
+        color:"darkblue",
+        marginTop:15,
+        marginBottom:15
+    },
+    text1:{
+        fontSize:16,
+        fontStyle:"italic",
+        color:Colors.grey3,
+        textAlign:"center",
+        marginBottom:5
     },
     image:{
         width:250,

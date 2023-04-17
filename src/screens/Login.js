@@ -1,21 +1,64 @@
 import React,{useState} from "react";
-import {View,Text,SafeAreaView,ScrollView,StyleSheet,Image} from 'react-native';
-import Input from './views/components/Input';
-import Button from './views/components/Button';
-import c from "../src/images/c.png";
-import  auth  from '../firebase';
+import {View,Text,SafeAreaView,ScrollView,StyleSheet,Image,ImageBackground} from 'react-native';
+import Input from '../views/components/Input';
+import Button from '../views/components/Button';
+import c from "../images/c.png";
+import  auth, { provider2 }  from '../../firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { signInWithGoogle } from "../firebase";
+import { signInWithPopup ,FacebookAuthProvider} from "firebase/auth";
+import { provider } from "../../firebase";
 import GoogleButton from 'react-google-button'
-import Header from "./views/components/Header";
-import { StatusBar } from "react-native-web";
-import { Colors } from "./global/styles";
+import Header from "../views/components/Header";
+import { Colors } from "../global/styles";
 import { SocialIcon } from "react-native-elements";
 
 
 
 
 const Login=({navigation})=>{
+
+     const signInWithGoogle=()=>{
+        signInWithPopup (auth,provider)
+        .then((result)=>{
+        //   const name=result.user;
+          const name=result.user.displayName;
+          const email=result.user.email;
+          const profilePic=result.user.photoURL;
+          
+          navigation.navigate("HomeScreen");
+          localStorage.setItem("name",name);
+          localStorage.setItem("email",email);
+          localStorage.setItem("profilePic",profilePic);
+      
+          
+        })  
+        .catch((error)=>{
+            console.log(error);
+        });
+      }
+
+      const signInWithFacebook=()=>{
+        signInWithPopup (auth,provider2)
+        .then((result)=>{
+        //   const name=result.user;
+          const name=result.user.displayName;
+          const email=result.user.email;
+          const profilePic=result.user.photoURL;
+          
+          navigation.navigate("ForgetPass");
+          localStorage.setItem("name",name);
+          localStorage.setItem("email",email);
+          localStorage.setItem("profilePic",profilePic);
+      
+          
+        })  
+        .catch((error)=>{
+            console.log(error);
+        });
+
+      }
+
+
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const handelSignIn=()=>{
@@ -44,7 +87,6 @@ const Login=({navigation})=>{
         password:"",
     });
     const [errors,setErrors]=React.useState({ });
-    const [Loading,setLoading]=React.useState(false);
     const validate= async()=>{
         let isValid=true;
 
@@ -74,14 +116,15 @@ const Login=({navigation})=>{
     
     return(
          <SafeAreaView style={styles.container}>
-            
+            {/* <Image source={x}style={styles.img}/> */}
             <View style={styles.head}>
-            <StatusBar barStyle="light.content" backgroundColor={Colors.statusbar}/>
-            <Header title={"Login"}type={'arrow-left'}/>
+            <Header title={"Login"}type={'arrow-left'} navigation={navigation}/>
+
             </View>
             
             <ScrollView style={styles.svContainer}>
             <Image style={styles.image} source={c}/>
+
             <Text style={styles.textTitle}>Login Form</Text>
             <Text style={styles.text1}>Please enter email and password </Text>
             <Text style={styles.text1}> register with your account </Text>
@@ -91,28 +134,35 @@ const Login=({navigation})=>{
             onChangeText={setEmail}onFocus={()=>handelError(null,"email")} error={errors.email} value={email}/>
             <Input iconName="key"placeholder="Enter Your Password" password 
             onChangeText={setPassword}onFocus={()=>handelError(null,"password")} error={errors.password} value={password}/>
-            <Button title="LOGIN" onPress={(handelSignIn)}/>  
+            <Button  title="LOGIN" onPress={(handelSignIn)}/>  
             <Text  style={{...styles.text1,textDecorationLine:"underline",fontStyle:"bold",fontSize:17}} onPress={()=>navigation.navigate("ForgetPass")}>Forget Password ?</Text>
             <Text style={{...styles.textTitle,alignSelf:"center",fontSize:27,marginTop:15,color:"black"}}>or</Text>
-            <GoogleButton type="dark" style={styles.go} onClick={(signInWithGoogle)}>Sign In With Google</GoogleButton>
+            <GoogleButton type="dark" style={styles.go} onClick={(signInWithGoogle) }>Sign In With Google</GoogleButton>
             <View>
                 <SocialIcon
                     title="Sign In With Facebook"
                     button
                     type="facebook"
                     style={styles.socialIcon}
-                    onPress={()=>{}}
-                />
+                    onClick={(signInWithFacebook) }/>
                 
             </View>
             <Text  style={{...styles.text1,textDecorationLine:"underline",fontStyle:"bold",fontSize:17,marginTop:15}} onPress={()=>navigation.navigate("ٌRegistration")}>Don't have account? <Text style={{color:"#ff8c52",}}>Register</Text></Text>
             </View>
+            
             </ScrollView>
-
         </SafeAreaView>
     );
 };
 const styles=StyleSheet.create({
+   
+    img:{
+        flex:1,
+        justifyContent:"center",
+        alignItems:"center",
+        height:null,
+        width:null
+    },
     head:{
         flex:1
     },
@@ -129,7 +179,8 @@ const styles=StyleSheet.create({
         height:200,
         alignSelf:"center",
         marginTop:15,
-        flex:true
+        flex:true,
+        marginTop:30
     },
     text1:{
         fontSize:16,
@@ -139,7 +190,7 @@ const styles=StyleSheet.create({
     },
     textTitle:{
         fontWeight:"bold",
-        color:"#ff8c52",
+        color:"darkblue",
         fontSize :20,
         fontWeight:"bold",
         marginBottom:10
@@ -162,9 +213,8 @@ const styles=StyleSheet.create({
             width:"5",
           // backgroundColor:"GREEN",
             marginTop:13,
-            marginLeft:400,
-            marginRight:400,
-            marginHorizontal:100,
+            marginLeft:55,
+            marginRight:55,
             justifyContent:"center",
             alignItems:"center",
             borderRadius:1,
@@ -177,7 +227,7 @@ const styles=StyleSheet.create({
             color:"red"
         },
         socialIcon:{
-            marginHorizontal:400,
+            marginHorizontal:55,
             borderRadius:0,
             marginTop:12,
 

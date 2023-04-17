@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, getAuth,signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, getAuth,signInWithPopup,FacebookAuthProvider} from "firebase/auth";
  
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,24 +18,27 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
- const auth = getAuth(app);
+export const auth = getAuth(app);
 export default auth ;
 
-const provider=new GoogleAuthProvider();
+export const provider=new GoogleAuthProvider(app);
+export const provider2=new FacebookAuthProvider(app);
 
-export const signInWithGoogle=({navigation})=>{
-  signInWithPopup (auth,provider)
-  .then((result)=>{
-    const name=result.user.displayName;
-    const email=result.user.email;
-    const profilePic=result.user.photoURL;
+// export const signInWithGoogle=()=>{
+//   signInWithPopup (auth,provider)
+//   .then((result)=>{
+//     const name=result.user.displayName;
+//     const email=result.user.email;
+//     const profilePic=result.user.photoURL;
+    
+//     navigation.navigate("Register");
+//     localStorage.setItem("name",name);
+//     localStorage.setItem("email",email);
+//     localStorage.setItem("profilePic",profilePic);
 
-    localStorage.setItem("name",name);
-    localStorage.setItem("email",email);
-    localStorage.setItem("profilePic",profilePic);
-    navigation.navigate("HomeScreen")
-  })  
-  .cath((error)=>{
-      console.log(error);
-  });
-}
+    
+//   })  
+//   .cath((error)=>{
+//       console.log(error);
+//   });
+// }

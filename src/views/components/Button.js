@@ -11,12 +11,14 @@ const style=StyleSheet.create({
     button:{
         height:55,
         width:"100",
-        marginHorizontal:100,
+        marginHorizontal:80,
         backgroundColor:"#ff8c52",
         marginVertical:10,
         justifyContent:"center",
         alignItems:"center",
         borderRadius:12,
+        marginBottom:80,
+        marginTop:-90
     },
     title:{
         color:"white",
