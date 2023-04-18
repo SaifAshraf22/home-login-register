@@ -17,8 +17,8 @@ const style=StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         borderRadius:12,
-        marginBottom:80,
-        marginTop:-90
+        marginBottom:100,
+        // marginTop:-20
     },
     title:{
         color:"white",

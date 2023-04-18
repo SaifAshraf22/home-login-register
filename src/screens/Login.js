@@ -115,8 +115,10 @@ const Login=({navigation})=>{
     }
     
     return(
+        
          <SafeAreaView style={styles.container}>
-            {/* <Image source={x}style={styles.img}/> */}
+        
+
             <View style={styles.head}>
             <Header title={"Login"}type={'arrow-left'} navigation={navigation}/>
 
@@ -127,7 +129,7 @@ const Login=({navigation})=>{
 
             <Text style={styles.textTitle}>Login Form</Text>
             <Text style={styles.text1}>Please enter email and password </Text>
-            <Text style={styles.text1}> register with your account </Text>
+            <Text style={styles.text1} > register with your account </Text>
            
             <View style={styles.viewContainer}>
             <Input  iconName="envelope"placeholder="Enter Your E_mail"
@@ -135,18 +137,18 @@ const Login=({navigation})=>{
             <Input iconName="key"placeholder="Enter Your Password" password 
             onChangeText={setPassword}onFocus={()=>handelError(null,"password")} error={errors.password} value={password}/>
             <Button  title="LOGIN" onPress={(handelSignIn)}/>  
-            <Text  style={{...styles.text1,textDecorationLine:"underline",fontStyle:"bold",fontSize:17}} onPress={()=>navigation.navigate("ForgetPass")}>Forget Password ?</Text>
+            <Text  style={{...styles.text1,textDecorationLine:"underline",fontStyle:"bold",fontSize:17,marginTop:-80}} onPress={()=>navigation.navigate("ForgetPass")}>Forget Password ?</Text>
             <Text style={{...styles.textTitle,alignSelf:"center",fontSize:27,marginTop:15,color:"black"}}>or</Text>
             <GoogleButton type="dark" style={styles.go} onClick={(signInWithGoogle) }>Sign In With Google</GoogleButton>
             <View>
+            </View>
                 <SocialIcon
                     title="Sign In With Facebook"
                     button
                     type="facebook"
                     style={styles.socialIcon}
                     onClick={(signInWithFacebook) }/>
-                
-            </View>
+              
             <Text  style={{...styles.text1,textDecorationLine:"underline",fontStyle:"bold",fontSize:17,marginTop:15}} onPress={()=>navigation.navigate("ٌRegistration")}>Don't have account? <Text style={{color:"#ff8c52",}}>Register</Text></Text>
             </View>
             
